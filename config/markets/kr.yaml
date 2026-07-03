@@ -1,0 +1,23 @@
+# Korea equities (KOSPI/KOSDAQ). Uniform 30% daily price limit band; limit-hit
+# days are recorded as events (label 4d).
+market_id: KR
+timezone: Asia/Seoul
+trading_calendar: XKRX
+decision_time_local: "08:00"   # pre-open, local tz
+currency: KRW
+price_limit:
+  all: 0.30                    # uniform 30% band across boards
+ticker_suffixes:
+  - ".KS"                      # KOSPI
+  - ".KQ"                      # KOSDAQ
+sentiment_sources:             # ordered by priority (section 1.1)
+  - market_data                # pykrx primary, yfinance .KS/.KQ fallback
+  - naver_finance_board
+  - rss_news_kr
+  - x_twitter                  # optional
+label_params:
+  k: 5
+  d: 0.10
+  rv_percentile: 0.95
+  limit_hit_is_event: true     # label 4d
+  suspension_is_event: false   # suspensions modelled for CN only

@@ -1,0 +1,21 @@
+# United States equities. No price limits; return-jump label (4c) applies.
+market_id: US
+timezone: America/New_York
+trading_calendar: XNYS
+decision_time_local: "08:30"   # pre-open, local tz
+currency: USD
+price_limit: null              # no daily price limit band in US markets
+ticker_suffixes: []            # bare symbols, e.g. AAPL
+sentiment_sources:             # ordered by priority (section 1.1)
+  - market_data                # yfinance
+  - stocktwits
+  - reddit
+  - rss_news
+  - x_twitter                  # optional
+label_params:
+  k: 5
+  d: 0.10
+  j: 3.0
+  rv_percentile: 0.95
+  limit_hit_is_event: false    # no limits in US
+  suspension_is_event: false

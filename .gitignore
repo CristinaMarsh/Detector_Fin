@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Data (pipeline output is append-only parquet; never commit it)
+data/
+*.parquet
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
