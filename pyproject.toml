@@ -15,6 +15,7 @@ dependencies = [
     "pandas>=2.0",
     "pyarrow>=14.0",
     "exchange_calendars>=4.5",
+    "jinja2>=3.1",
 ]
 
 [project.optional-dependencies]
@@ -28,12 +29,17 @@ fetch = [
     "akshare>=1.13",
     "pykrx>=1.0.45",
 ]
+# Simplified -> Traditional conversion for the publication build. Optional: the
+# generator degrades to identity (fixtures are authored in Traditional) without it.
+publish = [
+    "opencc-python-reimplemented>=0.1.7",
+]
 
 [tool.setuptools.packages.find]
 where = ["src"]
 
 [tool.setuptools.package-data]
-detector_fin = ["py.typed"]
+detector_fin = ["py.typed", "publish/templates/*.html"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

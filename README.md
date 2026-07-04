@@ -1,5 +1,8 @@
 # Detector_Fin
 
+**Live site: https://cristinamarsh.github.io/Detector_Fin/** — the generated
+publication site, served by GitHub Pages from `main` `/docs`.
+
 Daily equity **risk assessment** combining news flow, social sentiment, and
 market statistics across multiple markets (US, China, Korea initially). The
 output is a *risk dossier* per ticker, not a trading signal — a human retains
@@ -9,7 +12,7 @@ Pipeline: **Fetcher → Aggregator → Judge (quant + LLM) → Report.** The pip
 runs once per market per trading day at that market's own pre-open decision
 time. Markets are isolated at runtime but share code and schemas.
 
-See [`Design Contract v0.2.2`](#design-contract) for the full specification.
+See [`Design Contract v0.3`](#design-contract) for the full specification.
 
 ## Status
 
@@ -18,18 +21,22 @@ This repository is built milestone by milestone (one PR each):
 | Milestone | Scope | State |
 |-----------|-------|-------|
 | **M1** | `schemas.py` + `MarketConfig` loader + storage layer + tests | ✅ merged |
-| **M2** | Fetcher: market-data adapters (yfinance/AkShare/pykrx), equities **and ETFs**, + universe registry + calendars | ✅ this PR |
+| **M2** | Fetcher: market-data adapters (yfinance/AkShare/pykrx), equities **and ETFs**, + universe registry + calendars | ✅ merged |
 | M3 | Fetcher: sentiment adapters (stocktwits, guba, naver) | — |
 | M4 | Aggregator: dedup, entity resolution, sentiment, snapshot builder | — |
 | M5 | Judge/quant + per-market baselines + evaluation harness | — |
 | M6 | Judge/LLM + evidence dossier + GitHub Issue reporter | — |
 | M7 | GitHub Actions cron workflows (one per market) | — |
 | M8 | Backtest report over pilot universe | — |
+| **M10a** | Publication layer: static site generator + sample content fixtures | ✅ this PR |
+| M10b | Publication layer: LLM writing layer (articles from snapshots) | — |
 
-## Viewing the dashboard
+## Viewing the site
 
-The dashboard is a static site under [`docs/`](docs/) — `index.html` plus a
-`dashboard.json` payload and a Chinese locale in `i18n/zh.json`.
+The display layer is a generated **publication site** under [`docs/`](docs/):
+`index.html` is the editorial front page, with market-desk pages, individual
+article pages under `docs/articles/`, and an about page. The original data panel
+is preserved unchanged at `docs/panel.html` and linked from every page footer.
 
 - **GitHub Pages.** Served from the `docs` folder on `main` at
   **https://cristinamarsh.github.io/Detector_Fin/** once Pages is enabled:
@@ -38,15 +45,31 @@ The dashboard is a static site under [`docs/`](docs/) — `index.html` plus a
 - **Mainland-China mirror.** For more reliable access from mainland China, a
   [Tencent EdgeOne Pages](https://edgeone.ai/products/pages) site can be bound
   to this repository with the output directory set to `docs`.
-- **Local preview.** No build step — serve the folder directly:
+- **Local preview.** No build step for viewing — serve the folder directly:
 
   ```bash
   python -m http.server --directory docs 8000
   # then open http://localhost:8000/
   ```
 
-  The page also embeds fallback data, so opening `docs/index.html` directly
-  renders offline.
+### Regenerating the site (M10a)
+
+The site is rendered from article fixtures by a Jinja2 generator. The output is
+committed, so it is live immediately after merge; regenerate after changing
+fixtures or templates:
+
+```bash
+pip install -e ".[publish]"        # optional: OpenCC (Simplified → Traditional)
+python -m detector_fin.publish_site
+```
+
+- **Content**: Traditional-Chinese fixtures in `data/sample_articles/` (one
+  morning call per market plus per-ticker briefs), each citing resolvable
+  exchange/public source pages whose URLs propagate verbatim.
+- **Config & i18n**: `config/site.yaml` and `docs/i18n/zh-Hant.json`.
+- **Guardrails**: internal schema tokens never appear in rendered HTML, every
+  page carries the research disclaimer, and every article shows its sources as
+  clickable links. Rendering is idempotent. The LLM writing layer is **M10b**.
 
 ## What's in M2
 

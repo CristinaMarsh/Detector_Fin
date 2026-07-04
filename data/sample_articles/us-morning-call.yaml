@@ -1,0 +1,16 @@
+id: us-morning-call
+kind: morning_call
+market_id: US
+date_local: 2026-07-03
+lang: zh-Hant
+headline: 美股開盤前風險快評：科技權值波動放大，留意財報空窗期的訊息落差
+dek: 隔夜情緒分歧，半導體與大型科技股的隱含波動同步走高。
+body_paragraphs:
+  - 開盤前的多來源訊號顯示，科技權值股的新聞流量與社群討論量較六十日均值明顯放大，隱含波動百分位同步抬升。當前正值財報空窗期，缺乏基本面錨定，訊息落差容易被短線情緒放大。
+  - 觀察面上，值得留意的是波動的來源結構：部分放量來自產品發表與行業評論，而非負面事件本身。此類熱度雖推高風險分數，但與尾部下行風險的關聯性相對有限，需與價格行為交叉驗證。
+  - 本段僅為對公開資料所反映之風險狀態的整理，不構成對任何標的的買賣判斷。
+sources:
+  - title: Nasdaq · Market Activity
+    url: https://www.nasdaq.com/market-activity
+  - title: Reuters · US Markets
+    url: https://www.reuters.com/markets/us/

@@ -16,8 +16,10 @@ htmlcov/
 venv/
 env/
 
-# Data (pipeline output is append-only parquet; never commit it)
-data/
+# Data: pipeline output (append-only parquet) is never committed, but the
+# publication article fixtures under data/sample_articles/ are.
+data/*
+!data/sample_articles/
 *.parquet
 
 # OS / editor

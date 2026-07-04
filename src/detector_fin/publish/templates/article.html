@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block page_title %}{{ a.headline|t2t }} · {{ site.site_title }}{% endblock %}
+{% block content %}
+
+<article class="article">
+  <p class="kicker">
+    <span class="badge {{ a.market_id|lower }}">{{ desk_name }}</span>
+    {{ kind_label }}
+  </p>
+  <h1 class="headline">{{ a.headline|t2t }}</h1>
+  <p class="dek">{{ a.dek|t2t }}</p>
+  <p class="byline">{{ t.label_updated }} {{ a.date_local }}{% if a.ticker %} · {{ a.ticker }}{% endif %}</p>
+
+  {% for para in a.body_paragraphs %}
+  <p class="body">{{ para|t2t }}</p>
+  {% endfor %}
+
+  <section class="sources">
+    <h2>{{ t.label_sources }}</h2>
+    <ul>
+      {% for s in a.sources %}
+      <li><a href="{{ s.url }}" target="_blank" rel="noopener noreferrer">{{ s.title|t2t }}</a></li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <a class="backlink" href="{{ root }}desk-{{ a.market_id|lower }}.html">&larr; {{ desk_name }}</a>
+</article>
+
+{% endblock %}

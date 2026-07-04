@@ -1,4 +1,4 @@
-# Detector_Fin — Design Contract v0.2.2
+# Detector_Fin — Design Contract v0.3
 
 Purpose: daily equity risk assessment combining news flow, social
 sentiment, and market statistics across multiple markets (US, China,
@@ -190,3 +190,53 @@ M7 GitHub Actions cron workflows (three schedules, one per market)
 M8 backtest report over pilot universe: 15 liquid US names, 15 CSI 300
    constituents (mix of main board and ChiNext/STAR), 10 KOSPI 200
    constituents
+M10a publication layer: static site generator + sample content fixtures
+    (this section 6). LLM writing layer is M10b.
+
+## 6. Publication layer (new in v0.3)
+
+The display layer is a generated publication site -- an editorial daily
+covering market risk, in the style of an automated market-intelligence
+journal -- rendered as static HTML into `docs/` and served by GitHub Pages.
+M10a is the static site generator with fixture-authored sample content; the
+LLM writing layer that authors articles from snapshots is M10b. The schema and
+generator are designed for M10b now but M10b is not implemented here.
+
+### 6.1 Article schema
+
+Article:
+  id             # stable slug, also the article page filename
+  kind           # one of {morning_call, brief, weekly}
+  market_id      # "US", "CN", "KR"
+  ticker         # optional; present for single-name briefs
+  date_local     # publication date, market-local
+  lang           # e.g. "zh-Hant"
+  headline
+  dek            # standfirst / subtitle
+  body_paragraphs[]
+  sources[]      # {title, url}; url propagates VERBATIM per the section 3
+                 #   provenance rule -- never backfilled by search
+  model_version  # empty string for fixture-authored articles; MANDATORY and
+  prompt_hash    #   non-empty once an article is LLM-written (M10b)
+
+### 6.2 Site config
+
+`config/site.yaml`:
+  site_title
+  locale         # UI locale key; default "zh-Hant"
+  base_url
+  disclaimer_key # key into the locale file for the research disclaimer
+
+Simplified-Chinese source strings are converted to Traditional at build time
+via OpenCC (optional `publish` extra). Fixture content is authored in
+Traditional; the conversion is a normalisation step, never applied to URLs.
+
+### 6.3 Rendering guardrails
+
+- Internal schema tokens (e.g. observed_at, prompt_hash, model_version,
+  text_original, sentiment_z, instrument_type) must NEVER appear in rendered
+  HTML. The publication surfaces editorial prose and sources only.
+- Every article page must display its sources as clickable links.
+- Every generated page must carry the research disclaimer.
+- No investment-advice wording anywhere. The site reports risk; it never
+  recommends a trade. A disclaimer denying advice is required, not advice.

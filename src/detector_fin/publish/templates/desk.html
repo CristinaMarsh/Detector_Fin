@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block page_title %}{{ desk.name }} · {{ site.site_title }}{% endblock %}
+{% block content %}
+
+<p class="kicker"><span class="badge {{ desk.slug }}">{{ desk.name }}</span></p>
+
+{% if morning_calls %}
+<h2 class="sec-head">{{ t.sec_morning_calls }}</h2>
+<div class="cards">
+  {% for a in morning_calls %}
+  <article class="card">
+    <span class="kicker">{{ t['kind_' ~ a.kind] }}</span>
+    <h3 class="headline"><a href="{{ root }}articles/{{ a.id }}.html">{{ a.headline|t2t }}</a></h3>
+    <p class="dek">{{ a.dek|t2t }}</p>
+    <p class="more"><a href="{{ root }}articles/{{ a.id }}.html">{{ t.label_read_more }} &rarr;</a></p>
+  </article>
+  {% endfor %}
+</div>
+{% endif %}
+
+<h2 class="sec-head">{{ t.sec_briefs }}</h2>
+<ul class="brieflist">
+  {% for a in briefs %}
+  <li>
+    <a href="{{ root }}articles/{{ a.id }}.html">{{ a.headline|t2t }}</a>
+    <div class="dek">{{ a.dek|t2t }}</div>
+  </li>
+  {% else %}
+  <li class="muted">{{ t.empty_desk }}</li>
+  {% endfor %}
+</ul>
+
+<a class="backlink" href="{{ root }}index.html">&larr; {{ t.label_back_home }}</a>
+
+{% endblock %}

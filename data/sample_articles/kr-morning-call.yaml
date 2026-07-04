@@ -1,0 +1,16 @@
+id: kr-morning-call
+kind: morning_call
+market_id: KR
+date_local: 2026-07-03
+lang: zh-Hant
+headline: 韓股開盤前風險快評：半導體出口牽動指數，權值股波動待觀察
+dek: 出口數據前後的定價調整，使指數權值股的波動短暫放大。
+body_paragraphs:
+  - 開盤前的資料顯示，半導體相關權值股的波動在出口數據公布前後短暫放大，已實現波動處於六十日的高百分位。此類波動多來自事件前的正常定價，未必伴隨負面輿情。
+  - 本市場設有單一的每日價格限制帶，觸及限制帶的交易日會被記錄為事件成分。開盤前需留意昨日是否有個股觸及限制帶後收窄，作為風險判讀的一環。
+  - 以上內容為對公開資訊之風險狀態的描述，僅供研究交流，不構成投資建議。
+sources:
+  - title: KRX · Korea Exchange (Global)
+    url: http://global.krx.co.kr/
+  - title: Naver Finance · 시세
+    url: https://finance.naver.com/sise/
