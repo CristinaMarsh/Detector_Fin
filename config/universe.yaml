@@ -1,0 +1,25 @@
+# Universe registry (Design Contract v0.2.2, section 0).
+# Each instrument: {ticker, name_en, market_id, instrument_type}.
+# instrument_type is one of {equity, etf}. CN ETFs carry a 10% price limit;
+# cross-border (QDII) ETFs may differ and can set price_limit_override.
+# Names are in English only.
+instruments:
+  # --- US: bare symbols; ETFs handled identically to equities in yfinance ---
+  - { ticker: NVDA, name_en: NVIDIA, market_id: US, instrument_type: equity }
+  - { ticker: TSLA, name_en: Tesla, market_id: US, instrument_type: equity }
+  - { ticker: AAPL, name_en: Apple, market_id: US, instrument_type: equity }
+  - { ticker: SPY, name_en: SPDR S&P 500 ETF, market_id: US, instrument_type: etf }
+  - { ticker: QQQ, name_en: Invesco QQQ Trust, market_id: US, instrument_type: etf }
+
+  # --- CN: .SS (Shanghai) / .SZ (Shenzhen) suffixes; ETFs at 10% limit band ---
+  - { ticker: 600519.SS, name_en: Kweichow Moutai, market_id: CN, instrument_type: equity }
+  - { ticker: 300750.SZ, name_en: CATL, market_id: CN, instrument_type: equity }
+  - { ticker: 510300.SS, name_en: CSI 300 ETF, market_id: CN, instrument_type: etf, price_limit_override: 0.10 }
+  - { ticker: 588000.SS, name_en: STAR 50 ETF, market_id: CN, instrument_type: etf, price_limit_override: 0.10 }
+  - { ticker: 159915.SZ, name_en: ChiNext ETF, market_id: CN, instrument_type: etf, price_limit_override: 0.10 }
+
+  # --- KR: .KS (KOSPI) / .KQ (KOSDAQ) suffixes ---
+  - { ticker: 005930.KS, name_en: Samsung Electronics, market_id: KR, instrument_type: equity }
+  - { ticker: 000660.KS, name_en: SK Hynix, market_id: KR, instrument_type: equity }
+  - { ticker: 035420.KS, name_en: NAVER, market_id: KR, instrument_type: equity }
+  - { ticker: 069500.KS, name_en: KODEX 200, market_id: KR, instrument_type: etf }

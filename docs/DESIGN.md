@@ -1,4 +1,4 @@
-# Detector_Fin — Design Contract v0.2.1
+# Detector_Fin — Design Contract v0.2.2
 
 Purpose: daily equity risk assessment combining news flow, social
 sentiment, and market statistics across multiple markets (US, China,
@@ -33,6 +33,26 @@ Rules:
   gap records in snapshots, never silently forward-filled prices.
 - A limit-hit day (close at the price limit band) is itself recorded
   as an event and used as a label component (see 4).
+
+### Universe registry (new in v0.2.2)
+
+The instruments the pipeline tracks live in `config/universe.yaml`. Each entry:
+
+Instrument:
+  ticker           # local suffixed ticker, e.g. 600519.SS, 069500.KS, SPY
+  name_en          # English display name
+  market_id        # "US", "CN", "KR"
+  instrument_type  # one of {equity, etf}
+  price_limit_override  # optional; fractional daily band overriding the
+                        #   market default for this instrument
+
+Rules:
+- `instrument_type` is a first-class field, not an after-the-fact tag. An ETF
+  is not merely a labelled equity: beyond price volatility it carries NAV
+  premium/discount and tracking-error risk dimensions, and its price-limit
+  regime can differ from single stocks. CN ETFs carry a 10 percent daily price
+  limit; cross-border (QDII) ETFs may differ, so per-instrument limit overrides
+  are allowed in the universe entry via `price_limit_override`.
 
 ## 1. Agents and responsibilities
 
@@ -93,17 +113,22 @@ RawItem:
   id, source, market_id, lang, ticker_hints[], text, url, author_hash,
   event_time (UTC), observed_at (UTC), meta{}
 
+MarketBar:
+  ticker, market_id, instrument_type, date_local, open, high, low, close,
+  volume, currency, source, observed_at (UTC)
+
 TickerDaySnapshot:
-  ticker, entity_id, market_id, date_local, n_items_by_source{},
-  sentiment_z, sentiment_model_version, burst_score, event_counts{},
+  ticker, entity_id, market_id, instrument_type, date_local,
+  n_items_by_source{}, sentiment_z, sentiment_model_version, burst_score,
+  event_counts{},
   top_fragments[] (max 10; each an object {text_original, text_en,
     source_name, source_url}; text fields sanitized, max 280 chars),
   market{close, ret_1d, rv_20d, drawdown_60d, limit_hit: bool,
          suspended: bool, dist_to_upper_limit, dist_to_lower_limit}
 
 RiskScore:
-  ticker, market_id, date_local, score (0..1), components{},
-  method_version
+  ticker, market_id, instrument_type, date_local, score (0..1),
+  components{}, method_version
 
 EvidenceDossier:
   ticker, market_id, date_local, summary_claims[], supporting_counts{},
@@ -150,7 +175,9 @@ against baselines, then meta-analyzed across markets.
 ## 5. Milestones (one PR each)
 M1 schemas.py + MarketConfig loader + storage layer (parquet,
    append-only, partitioned by market_id/date) + tests
-M2 fetcher: market_data adapters (yfinance US, AkShare CN, pykrx KR)
+M2 fetcher: market_data adapters (yfinance US, AkShare CN, pykrx KR),
+   covering both equities and ETFs (yfinance symbols, AkShare
+   fund_etf_hist_em, pykrx ETF OHLCV endpoints) + universe registry
    + trading calendars + fixtures
 M3 fetcher: sentiment adapters (stocktwits, eastmoney_guba,
    naver_finance_board) + fixtures

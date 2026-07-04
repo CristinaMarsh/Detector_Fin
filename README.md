@@ -9,7 +9,7 @@ Pipeline: **Fetcher → Aggregator → Judge (quant + LLM) → Report.** The pip
 runs once per market per trading day at that market's own pre-open decision
 time. Markets are isolated at runtime but share code and schemas.
 
-See [`Design Contract v0.2`](#design-contract) for the full specification.
+See [`Design Contract v0.2.2`](#design-contract) for the full specification.
 
 ## Status
 
@@ -17,14 +17,63 @@ This repository is built milestone by milestone (one PR each):
 
 | Milestone | Scope | State |
 |-----------|-------|-------|
-| **M1** | `schemas.py` + `MarketConfig` loader + storage layer + tests | ✅ this PR |
-| M2 | Fetcher: market-data adapters (yfinance/AkShare/pykrx) + calendars | — |
+| **M1** | `schemas.py` + `MarketConfig` loader + storage layer + tests | ✅ merged |
+| **M2** | Fetcher: market-data adapters (yfinance/AkShare/pykrx), equities **and ETFs**, + universe registry + calendars | ✅ this PR |
 | M3 | Fetcher: sentiment adapters (stocktwits, guba, naver) | — |
 | M4 | Aggregator: dedup, entity resolution, sentiment, snapshot builder | — |
 | M5 | Judge/quant + per-market baselines + evaluation harness | — |
 | M6 | Judge/LLM + evidence dossier + GitHub Issue reporter | — |
 | M7 | GitHub Actions cron workflows (one per market) | — |
 | M8 | Backtest report over pilot universe | — |
+
+## Viewing the dashboard
+
+The dashboard is a static site under [`docs/`](docs/) — `index.html` plus a
+`dashboard.json` payload and a Chinese locale in `i18n/zh.json`.
+
+- **GitHub Pages.** Served from the `docs` folder on `main` at
+  **https://cristinamarsh.github.io/Detector_Fin/** once Pages is enabled:
+  *Settings → Pages → Source: Deploy from a branch → Branch: `main`, Folder:
+  `/docs` → Save.* Allow a minute or two after the first save.
+- **Mainland-China mirror.** For more reliable access from mainland China, a
+  [Tencent EdgeOne Pages](https://edgeone.ai/products/pages) site can be bound
+  to this repository with the output directory set to `docs`.
+- **Local preview.** No build step — serve the folder directly:
+
+  ```bash
+  python -m http.server --directory docs 8000
+  # then open http://localhost:8000/
+  ```
+
+  The page also embeds fallback data, so opening `docs/index.html` directly
+  renders offline.
+
+## What's in M2
+
+The **market-data fetcher**: real daily OHLCV bars for all three markets,
+covering equities **and ETFs**.
+
+- **Universe registry** (`config/universe.yaml` → `Instrument`): every tracked
+  instrument with a first-class `instrument_type` (`equity` | `etf`) and an
+  optional `price_limit_override` (CN ETFs sit at a 10% band; cross-border QDII
+  ETFs may differ).
+- **`MarketBar`** schema: one daily OHLCV bar in local currency, stamped with a
+  UTC `observed_at` and filtered to valid exchange sessions.
+- **Adapters** (`detector_fin.fetcher.market_data`): `YFinanceAdapter` (US),
+  `AkshareAdapter` (CN, `fund_etf_hist_em` for ETFs), `PykrxAdapter` (KR, ETF
+  OHLCV endpoints). Each strips/derives the local ticker suffix and lazily
+  imports its client, so the core install needs none of them.
+- **CLI**:
+
+  ```bash
+  pip install -e ".[fetch]"          # installs yfinance / akshare / pykrx
+  python -m detector_fin.fetch_bars --market CN --since 2026-06-01
+  ```
+
+  Loads the universe, runs the market's adapter, and appends `MarketBar`
+  records to the `bars` dataset of the `ParquetStore`.
+
+Tests use recorded fixtures only — no live network calls.
 
 ## What's in M1
 
@@ -97,7 +146,8 @@ Requires Python ≥ 3.11.
 
 ## Design Contract
 
-The full v0.2 design contract (market abstraction, agents, schemas, temporal
-discipline, evaluation protocol, milestones) governs this project. M1 implements
-sections 0 and 2 and the storage requirements of M1; later milestones build on
-this contract.
+The full [v0.2.2 design contract](docs/DESIGN.md) (market abstraction, universe
+registry, agents, schemas, temporal discipline and provenance, evaluation
+protocol, milestones) governs this project. M1 implements the storage spine and
+schemas; M2 adds the universe registry and market-data fetcher (sections 0, 1.1,
+and 2). Later milestones build on this contract.
