@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>偵測金融日報</title>
+<title>關於本站 · 偵測金融日報</title>
 <style>
 :root {
   --paper: #fbfaf7; --ink: #1a1a1a; --ink-2: #4a4a4a; --ink-3: #7a7a72;
@@ -126,85 +126,20 @@ footer { border-top: 3px double var(--line-2); padding: 20px 0 40px; margin-top:
 <main>
   <div class="wrap">
 
-<section aria-labelledby="mc">
-  <h2 class="sec-head" id="mc">晨間快評</h2>
-  <div class="cards">
-    <article class="card">
-      <span class="kicker">
-        <span class="badge us">美股台</span>
-        晨間快評
-      </span>
-      <h3 class="headline"><a href="articles/us-morning-call.html">美股開盤前風險快評：科技權值波動放大，留意財報空窗期的訊息落差</a></h3>
-      <p class="dek">隔夜情緒分歧，半導體與大型科技股的隱含波動同步走高。</p>
-      <p class="more"><a href="articles/us-morning-call.html">閱讀全文 &rarr;</a></p>
-    </article>
-    <article class="card">
-      <span class="kicker">
-        <span class="badge kr">韓股台</span>
-        晨間快評
-      </span>
-      <h3 class="headline"><a href="articles/kr-morning-call.html">韓股開盤前風險快評：半導體出口牽動指數，權值股波動待觀察</a></h3>
-      <p class="dek">出口數據前後的定價調整，使指數權值股的波動短暫放大。</p>
-      <p class="more"><a href="articles/kr-morning-call.html">閱讀全文 &rarr;</a></p>
-    </article>
-    <article class="card">
-      <span class="kicker">
-        <span class="badge cn">A股台</span>
-        晨間快評
-      </span>
-      <h3 class="headline"><a href="articles/cn-morning-call.html">A股開盤前風險快評：兩市成交回落，題材輪動下的個股尾部風險升溫</a></h3>
-      <p class="dek">情緒指標偏弱，部分權值股距跌停帶的距離收窄。</p>
-      <p class="more"><a href="articles/cn-morning-call.html">閱讀全文 &rarr;</a></p>
-    </article>
-  </div>
-</section>
+<div class="prose">
+  <p class="kicker">關於</p>
+  <h1 class="sec-head">關於本站</h1>
+  <p>《偵測金融日報》是一個個人研究專案的展示層，以自動化市場情報刊物的形式，呈現美股、A股與韓股三個市場的每日風險觀察。</p>
+  <p>本站的文章分為晨間快評與個股簡報兩類。晨間快評以市場為單位，綜述當日開盤前值得留意的風險脈絡；個股簡報則聚焦於試點標的，整理其近期波動、輿情與事件面的變化。</p>
+  <p>所有內容僅描述與整理公開資訊所反映的風險狀態，不對任何標的作出買賣判斷。頁面所列之連結，均可追溯至交易所或公開的資料頁面。</p>
 
-<section aria-labelledby="br">
-  <h2 class="sec-head" id="br">個股簡報</h2>
-  <div class="deskcols">
-    <div>
-      <p class="kicker"><span class="badge us">美股台</span></p>
-      <ul class="brieflist">
-        <li>
-          <a href="articles/brief-nvda.html">輝達（NVIDIA）：新聞熱度攀升，隱含波動處於近期高位</a>
-          <div class="dek">事件強度放大主要來自產品與行業報導，負面佔比不高。</div>
-        </li>
-      </ul>
-    </div>
-    <div>
-      <p class="kicker"><span class="badge cn">A股台</span></p>
-      <ul class="brieflist">
-        <li>
-          <a href="articles/brief-600519-ss.html">貴州茅臺：板塊資金流出，六十日回撤接近預警區間</a>
-          <div class="dek">輿情面相對平靜，回撤主要來自板塊性的資金流出。</div>
-        </li>
-        <li>
-          <a href="articles/brief-510300-ss.html">滬深300ETF：折溢價偏離收斂，跟蹤誤差維持平穩</a>
-          <div class="dek">相較於單一個股，基金型標的另有淨值折溢價與跟蹤誤差兩個特有維度。</div>
-        </li>
-      </ul>
-    </div>
-    <div>
-      <p class="kicker"><span class="badge kr">韓股台</span></p>
-      <ul class="brieflist">
-        <li>
-          <a href="articles/brief-005930-ks.html">三星電子：討論區情緒轉弱，昨日盤中觸及價格限制帶後收窄</a>
-          <div class="dek">觸及限制帶多由指數期貨的技術性因素觸發，基本面消息相對平靜。</div>
-        </li>
-      </ul>
-    </div>
-  </div>
-</section>
+  <h2 class="sec-head">方法論</h2>
+  <p>風險觀察由多來源的市場統計與輿情訊號彙整而成，於各市場開盤前的決策時點產生，僅使用該時點之前已可取得的資料，避免以未來資訊回溯評斷。</p>
+  <p>跨市場的比較僅在標準化之後進行，各市場的報酬與風險標籤皆以當地貨幣計算，站內不做匯率換算。</p>
+  <p>文章目前由固定樣稿撰寫，用於展示版面與流程；未來的撰稿層將依既定契約，於文章中標註模型版本與提示雜湊，以維持可追溯性。</p>
 
-<aside class="trending" aria-labelledby="tr">
-  <p class="kicker" id="tr">熱門追蹤</p>
-  <ol>
-    <li><a href="articles/brief-nvda.html">輝達（NVIDIA）：新聞熱度攀升，隱含波動處於近期高位</a></li>
-    <li><a href="articles/brief-600519-ss.html">貴州茅臺：板塊資金流出，六十日回撤接近預警區間</a></li>
-    <li><a href="articles/brief-510300-ss.html">滬深300ETF：折溢價偏離收斂，跟蹤誤差維持平穩</a></li>
-    <li><a href="articles/brief-005930-ks.html">三星電子：討論區情緒轉弱，昨日盤中觸及價格限制帶後收窄</a></li>
-  </ol>
-</aside>
+  <a class="backlink" href="index.html">&larr; 返回首頁</a>
+</div>
 
   </div>
 </main>

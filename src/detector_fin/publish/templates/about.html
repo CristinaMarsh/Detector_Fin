@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block page_title %}{{ t.about_title }} · {{ site.site_title }}{% endblock %}
+{% block content %}
+
+<div class="prose">
+  <p class="kicker">{{ t.nav_about }}</p>
+  <h1 class="sec-head">{{ t.about_title }}</h1>
+  {% for para in t.about_paragraphs %}
+  <p>{{ para }}</p>
+  {% endfor %}
+
+  <h2 class="sec-head">{{ t.methodology_title }}</h2>
+  {% for para in t.methodology_paragraphs %}
+  <p>{{ para }}</p>
+  {% endfor %}
+
+  <a class="backlink" href="{{ root }}index.html">&larr; {{ t.label_back_home }}</a>
+</div>
+
+{% endblock %}

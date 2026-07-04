@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section aria-labelledby="mc">
+  <h2 class="sec-head" id="mc">{{ t.sec_morning_calls }}</h2>
+  <div class="cards">
+    {% for a in morning_calls %}
+    <article class="card">
+      <span class="kicker">
+        <span class="badge {{ a.market_id|lower }}">{{ t['desk_' ~ a.market_id] }}</span>
+        {{ t['kind_' ~ a.kind] }}
+      </span>
+      <h3 class="headline"><a href="{{ root }}articles/{{ a.id }}.html">{{ a.headline|t2t }}</a></h3>
+      <p class="dek">{{ a.dek|t2t }}</p>
+      <p class="more"><a href="{{ root }}articles/{{ a.id }}.html">{{ t.label_read_more }} &rarr;</a></p>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section aria-labelledby="br">
+  <h2 class="sec-head" id="br">{{ t.sec_briefs }}</h2>
+  <div class="deskcols">
+    {% for group in desk_briefs %}
+    <div>
+      <p class="kicker"><span class="badge {{ group.desk.slug }}">{{ group.desk.name }}</span></p>
+      <ul class="brieflist">
+        {% for a in group.briefs %}
+        <li>
+          <a href="{{ root }}articles/{{ a.id }}.html">{{ a.headline|t2t }}</a>
+          <div class="dek">{{ a.dek|t2t }}</div>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<aside class="trending" aria-labelledby="tr">
+  <p class="kicker" id="tr">{{ t.sec_trending }}</p>
+  <ol>
+    {% for a in trending %}
+    <li><a href="{{ root }}articles/{{ a.id }}.html">{{ a.headline|t2t }}</a></li>
+    {% endfor %}
+  </ol>
+</aside>
+
+{% endblock %}

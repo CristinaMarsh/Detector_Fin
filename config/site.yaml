@@ -1,0 +1,5 @@
+# Publication site configuration (Design Contract v0.3, section 6.2).
+site_title: 偵測金融日報
+locale: zh-Hant            # UI locale; Simplified sources converted at build via OpenCC
+base_url: https://github.com/CristinaMarsh/Detector_Fin
+disclaimer_key: disclaimer

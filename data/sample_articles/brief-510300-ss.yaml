@@ -1,0 +1,17 @@
+id: brief-510300-ss
+kind: brief
+market_id: CN
+ticker: 510300.SS
+date_local: 2026-07-03
+lang: zh-Hant
+headline: 滬深300ETF：折溢價偏離收斂，跟蹤誤差維持平穩
+dek: 相較於單一個股，基金型標的另有淨值折溢價與跟蹤誤差兩個特有維度。
+body_paragraphs:
+  - 作為寬基指數的基金型標的，其風險語義與單一個股不同：除價格波動外，還需關注相對淨值的折溢價與跟蹤誤差。近期折溢價的偏離趨於收斂，跟蹤誤差維持平穩，尾部風險訊號不高。
+  - 在本市場，此類標的與主板同受每日價格限制帶約束，觸及限制帶會被記錄為事件成分。整體而言，當前的風險輪廓以流動性與資金面的正常波動為主。
+  - 本文僅描述公開資料所反映的風險狀態，不涉及任何買賣判斷。
+sources:
+  - title: 東方財富 · 滬深300ETF行情
+    url: https://quote.eastmoney.com/sh510300.html
+  - title: 上海證券交易所
+    url: http://www.sse.com.cn/
