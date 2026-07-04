@@ -1,0 +1,176 @@
+{
+  "generated_at": "2026-07-03T00:30:00Z",
+  "pipeline_status": "ok",
+  "kpi": {
+    "monitored": 40,
+    "flagged": 5,
+    "limit_hits": 2,
+    "items_read": 3214
+  },
+  "entries": [
+    {
+      "ticker": "300750.SZ",
+      "name": "宁德时代",
+      "market_id": "CN",
+      "score": 0.81,
+      "sentiment_z": -2.6,
+      "flags": [
+        "逼近跌停",
+        "监管类新闻 2 条"
+      ],
+      "claims": [
+        "股吧发帖量达 60 日均值的 4.2 倍，情绪 Z 值降至 -2.6",
+        "回看窗口内出现 2 条监管类新闻事件",
+        "昨日收盘价距跌停板仅 1.5%"
+      ],
+      "sources": [
+        {
+          "title": "东方财富股吧 · 宁德时代讨论区",
+          "url": "https://guba.eastmoney.com/list,300750.html"
+        },
+        {
+          "title": "雪球 · 宁德时代行情与讨论",
+          "url": "https://xueqiu.com/S/SZ300750"
+        },
+        {
+          "title": "财联社 · 电池行业监管报道",
+          "url": "https://www.cls.cn/"
+        }
+      ],
+      "contrarian": "发帖激增集中于两个低可信度来源，价格波动尚在正常区间。",
+      "issue_url": "https://github.com/CristinaMarsh/Detector_Fin/issues"
+    },
+    {
+      "ticker": "005930.KS",
+      "name": "三星电子",
+      "market_id": "KR",
+      "score": 0.74,
+      "sentiment_z": -1.9,
+      "flags": [
+        "昨日触及跌停"
+      ],
+      "claims": [
+        "Naver 讨论板负面帖占比升至 78%",
+        "昨日盘中触及 -30% 跌停带后收窄"
+      ],
+      "sources": [
+        {
+          "title": "Naver 金融 · 三星电子讨论板",
+          "url": "https://finance.naver.com/item/main.naver?code=005930"
+        },
+        {
+          "title": "韩联社 · 半导体产业新闻",
+          "url": "https://cn.yna.co.kr/"
+        }
+      ],
+      "contrarian": "跌停由指数期货技术性因素触发，个股基本面消息面平静。",
+      "issue_url": "https://github.com/CristinaMarsh/Detector_Fin/issues"
+    },
+    {
+      "ticker": "NVDA",
+      "name": "英伟达",
+      "market_id": "US",
+      "score": 0.68,
+      "sentiment_z": -1.4,
+      "flags": [
+        "新闻爆发 3.1 倍"
+      ],
+      "claims": [
+        "新闻事件强度达 60 日均值的 3.1 倍",
+        "隐含波动率百分位升至 91%"
+      ],
+      "sources": [
+        {
+          "title": "Reuters 科技板块",
+          "url": "https://www.reuters.com/technology/"
+        },
+        {
+          "title": "StockTwits · NVDA 情绪流",
+          "url": "https://stocktwits.com/symbol/NVDA"
+        }
+      ],
+      "contrarian": "新闻量放大主要来自产品发布报道，负面占比不高。",
+      "issue_url": "https://github.com/CristinaMarsh/Detector_Fin/issues"
+    },
+    {
+      "ticker": "600519.SS",
+      "name": "贵州茅台",
+      "market_id": "CN",
+      "score": 0.55,
+      "sentiment_z": -0.8,
+      "flags": [
+        "回撤 9.2%"
+      ],
+      "claims": [
+        "60 日回撤达 9.2%，接近预警阈值"
+      ],
+      "sources": [
+        {
+          "title": "雪球 · 贵州茅台行情与讨论",
+          "url": "https://xueqiu.com/S/SH600519"
+        }
+      ],
+      "contrarian": "舆情面平静，回撤为板块性资金流出所致。",
+      "issue_url": "https://github.com/CristinaMarsh/Detector_Fin/issues"
+    },
+    {
+      "ticker": "035420.KS",
+      "name": "NAVER",
+      "market_id": "KR",
+      "score": 0.47,
+      "sentiment_z": 1.1,
+      "flags": [
+        "波动率偏高"
+      ],
+      "claims": [
+        "已实现波动率处于 60 日的 88 百分位"
+      ],
+      "sources": [
+        {
+          "title": "Naver 金融 · NAVER 讨论板",
+          "url": "https://finance.naver.com/item/main.naver?code=035420"
+        }
+      ],
+      "contrarian": "波动来自财报临近的正常定价，不伴随负面舆情。",
+      "issue_url": "https://github.com/CristinaMarsh/Detector_Fin/issues"
+    },
+    {
+      "ticker": "TSLA",
+      "name": "特斯拉",
+      "market_id": "US",
+      "score": 0.33,
+      "sentiment_z": 0.4,
+      "flags": [],
+      "claims": [
+        "各分量均处正常区间"
+      ],
+      "sources": [
+        {
+          "title": "StockTwits · TSLA 情绪流",
+          "url": "https://stocktwits.com/symbol/TSLA"
+        }
+      ],
+      "contrarian": "",
+      "issue_url": ""
+    },
+    {
+      "ticker": "000660.KS",
+      "name": "SK海力士",
+      "market_id": "KR",
+      "score": 0.21,
+      "sentiment_z": 0.7,
+      "flags": [],
+      "claims": [
+        "各分量均处正常区间"
+      ],
+      "sources": [
+        {
+          "title": "Naver 金融 · SK海力士讨论板",
+          "url": "https://finance.naver.com/item/main.naver?code=000660"
+        }
+      ],
+      "contrarian": "",
+      "issue_url": ""
+    }
+  ]
+}
