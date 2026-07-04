@@ -4,8 +4,6 @@ from __future__ import annotations
 
 from datetime import date, datetime, timezone
 
-import pytest
-
 from detector_fin.schemas import MarketStats, RawItem, RiskScore, TickerDaySnapshot
 from detector_fin.storage import ParquetStore
 
@@ -123,12 +121,25 @@ def test_nested_snapshot_roundtrip(tmp_path):
 
 def test_introspection_helpers(tmp_path):
     store = ParquetStore(tmp_path)
-    store.append("risk", [
-        RiskScore(ticker="AAPL", market_id="US", date_local=date(2026, 1, 2),
-                  score=0.3, method_version="q-0.1"),
-        RiskScore(ticker="600519.SS", market_id="CN", date_local=date(2026, 1, 5),
-                  score=0.7, method_version="q-0.1"),
-    ])
+    store.append(
+        "risk",
+        [
+            RiskScore(
+                ticker="AAPL",
+                market_id="US",
+                date_local=date(2026, 1, 2),
+                score=0.3,
+                method_version="q-0.1",
+            ),
+            RiskScore(
+                ticker="600519.SS",
+                market_id="CN",
+                date_local=date(2026, 1, 5),
+                score=0.7,
+                method_version="q-0.1",
+            ),
+        ],
+    )
     assert store.markets("risk") == ["CN", "US"]
     assert store.dates("risk", "US") == [date(2026, 1, 2)]
     assert store.dates("risk", "CN") == [date(2026, 1, 5)]

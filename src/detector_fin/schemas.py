@@ -1,7 +1,7 @@
 """Authoritative data schemas for the Detector_Fin pipeline.
 
 These models are the contract between pipeline stages (Fetcher -> Aggregator
--> Judge -> Report). They mirror section 2 of the Design Contract v0.2.
+-> Judge -> Report). They mirror section 2 of the Design Contract v0.2.2.
 
 Design invariants enforced here:
 
@@ -34,6 +34,12 @@ from pydantic import (
 # ``en`` (English), ``zh`` (Chinese), ``ko`` (Korean). Sentiment scoring is
 # per-language with pinned model versions; raw scores never cross languages.
 Lang = Literal["en", "zh", "ko"]
+
+# Instrument taxonomy. An ETF is not just a labelled equity: it carries extra
+# risk dimensions (NAV premium/discount, tracking error) and its own price-limit
+# regime, so ``instrument_type`` is a first-class field, never an after-the-fact
+# tag (Design Contract v0.2.2, sections 0 and 2).
+InstrumentType = Literal["equity", "etf"]
 
 # Event taxonomy used by the Aggregator's event classifier (section 1.2).
 EventType = Literal[
@@ -120,6 +126,40 @@ class RawItem(StorageRecord):
         return self.id
 
 
+class MarketBar(StorageRecord):
+    """A single daily OHLCV bar for one instrument (market-data fetcher output).
+
+    Prices and volume are in the market's local currency and share units; no FX
+    conversion happens in the pipeline (section 0). ``observed_at`` is the UTC
+    instant the bar was fetched, so bars obey the same point-in-time discipline
+    as every other record. Partitioned by ``market_id`` / ``date_local``.
+    """
+
+    ticker: str
+    market_id: MarketId
+    instrument_type: InstrumentType
+    date_local: date
+    open: float
+    high: float
+    low: float
+    close: float
+    volume: float
+    currency: str
+    source: str  # adapter name, e.g. "yfinance", "akshare", "pykrx"
+    observed_at: datetime  # UTC fetch instant
+
+    @field_validator("observed_at")
+    @classmethod
+    def _utc(cls, v: datetime) -> datetime:
+        return _as_utc(v)
+
+    def partition_keys(self) -> tuple[str, date]:
+        return self.market_id, self.date_local
+
+    def record_key(self) -> str:
+        return self.ticker
+
+
 class Fragment(BaseModel):
     """A sanitised text fragment surfaced to the human reviewer.
 
@@ -168,6 +208,7 @@ class TickerDaySnapshot(StorageRecord):
     ticker: str
     entity_id: str
     market_id: MarketId
+    instrument_type: InstrumentType = "equity"
     date_local: date
     n_items_by_source: dict[str, int] = Field(default_factory=dict)
     sentiment_z: float | None = None
@@ -181,9 +222,7 @@ class TickerDaySnapshot(StorageRecord):
     @classmethod
     def _cap_fragments(cls, v: list[Fragment]) -> list[Fragment]:
         if len(v) > MAX_FRAGMENTS:
-            raise ValueError(
-                f"top_fragments capped at {MAX_FRAGMENTS}; got {len(v)}"
-            )
+            raise ValueError(f"top_fragments capped at {MAX_FRAGMENTS}; got {len(v)}")
         return v
 
     def partition_keys(self) -> tuple[str, date]:
@@ -198,6 +237,7 @@ class RiskScore(StorageRecord):
 
     ticker: str
     market_id: MarketId
+    instrument_type: InstrumentType = "equity"
     date_local: date
     score: Annotated[float, Field(ge=0.0, le=1.0)]
     components: dict[str, float] = Field(default_factory=dict)
@@ -233,11 +273,13 @@ class EvidenceDossier(StorageRecord):
 __all__ = [
     "Lang",
     "EventType",
+    "InstrumentType",
     "MarketId",
     "MAX_FRAGMENTS",
     "MAX_FRAGMENT_CHARS",
     "StorageRecord",
     "RawItem",
+    "MarketBar",
     "Fragment",
     "MarketStats",
     "TickerDaySnapshot",

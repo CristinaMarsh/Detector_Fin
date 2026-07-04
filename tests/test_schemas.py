@@ -91,7 +91,10 @@ def test_fragment_length_cap():
 
 
 def test_top_fragments_capped():
-    frags = [Fragment(lang="en", original=f"f{i}", en=f"f{i}") for i in range(MAX_FRAGMENTS + 1)]
+    frags = [
+        Fragment(lang="en", original=f"f{i}", en=f"f{i}")
+        for i in range(MAX_FRAGMENTS + 1)
+    ]
     with pytest.raises(ValidationError):
         TickerDaySnapshot(
             ticker="AAPL",
