@@ -168,6 +168,27 @@ pytest
 
 Requires Python ≥ 3.11.
 
+### Running real fetches
+
+Copy `.env.example` to `.env` and fill in `SEC_EDGAR_USER_AGENT` and
+`DART_API_KEY` (both documented in the file), then load it into the shell and
+run the CLIs:
+
+```bash
+set -a && source .env && set +a
+
+python -m detector_fin.fetch_bars --market CN --since 2026-06-01
+python -m detector_fin.fetch_disclosures --market US --since 2026-06-01
+```
+
+KR instruments need a `dart_corp_code` in `config/universe.yaml` before the
+DART adapter will fetch them. Codes come from DART's official corpCode.xml
+bundle; this tool downloads it and prints the lines to paste:
+
+```bash
+python -m detector_fin.tools.dart_corp_codes
+```
+
 ## Design Contract
 
 The full [v0.2.2 design contract](docs/DESIGN.md) (market abstraction, universe
