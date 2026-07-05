@@ -23,7 +23,7 @@ This repository is built milestone by milestone (one PR each):
 | **M1** | `schemas.py` + `MarketConfig` loader + storage layer + tests | ✅ merged |
 | **M2** | Fetcher: market-data adapters (yfinance/AkShare/pykrx), equities **and ETFs**, + universe registry + calendars | ✅ merged |
 | **M3a** | Fetcher: disclosure adapters (SEC EDGAR / cninfo / DART) + universe `ids` map | ✅ this PR |
-| M3b | Fetcher: sentiment adapters (stocktwits, guba, naver) | — |
+| **M3b** | Fetcher: sentiment adapters (StockTwits / guba / Naver board) | ✅ this PR |
 | M4 | Aggregator: dedup, entity resolution, sentiment, snapshot builder | — |
 | M5 | Judge/quant + per-market baselines + evaluation harness | — |
 | M6 | Judge/LLM + evidence dossier + GitHub Issue reporter | — |
@@ -179,6 +179,7 @@ set -a && source .env && set +a
 
 python -m detector_fin.fetch_bars --market CN --since 2026-06-01
 python -m detector_fin.fetch_disclosures --market US --since 2026-06-01
+python -m detector_fin.fetch_sentiment --market KR --since 2026-06-01
 ```
 
 KR instruments need a `dart_corp_code` in `config/universe.yaml` before the

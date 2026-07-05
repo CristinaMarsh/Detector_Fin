@@ -1,0 +1,30 @@
+{
+  "rc": 1,
+  "count": 3,
+  "re": [
+    {
+      "post_id": 1456789001,
+      "post_title": "茅台一季度业绩超预期，白酒板块要启动了吗",
+      "post_publish_time": "2026-06-16 10:30:00",
+      "user_nickname": "价值老兵",
+      "post_click_count": 5231,
+      "post_comment_count": 87
+    },
+    {
+      "post_id": 1456788800,
+      "post_title": "今天这个量能有点意思",
+      "post_publish_time": "2026-06-15 14:05:12",
+      "user_nickname": "散户甲",
+      "post_click_count": 1200,
+      "post_comment_count": 15
+    },
+    {
+      "post_id": null,
+      "post_title": "malformed row without id",
+      "post_publish_time": "2026-06-15 09:00:00",
+      "user_nickname": "路人",
+      "post_click_count": 1,
+      "post_comment_count": 0
+    }
+  ]
+}
