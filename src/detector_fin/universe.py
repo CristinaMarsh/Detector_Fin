@@ -32,6 +32,11 @@ class Instrument(BaseModel):
     # Fractional daily price-limit band overriding the market default for this
     # instrument (e.g. a cross-border ETF differing from the local regime).
     price_limit_override: float | None = Field(default=None, gt=0.0)
+    # Source-specific identifiers, e.g. {"edgar_cik": "0001045810"} for SEC
+    # EDGAR or {"dart_corp_code": "00126380"} for Korea's DART. Adapters that
+    # need an identifier skip instruments lacking it; identifiers are never
+    # guessed (Design Contract v0.3.1, section 1.1).
+    ids: dict[str, str] = Field(default_factory=dict)
 
 
 class UniverseError(Exception):

@@ -1,0 +1,32 @@
+{
+  "totalAnnouncement": 3,
+  "announcements": [
+    {
+      "announcementId": "1220345678",
+      "secCode": "600519",
+      "secName": "贵州茅台",
+      "announcementTitle": "贵州茅台2026年第一季度报告",
+      "announcementTime": 1781568000000,
+      "adjunctUrl": "finalpage/2026-06-16/1220345678.PDF",
+      "adjunctType": "PDF"
+    },
+    {
+      "announcementId": "1220345600",
+      "secCode": "600519",
+      "secName": "贵州茅台",
+      "announcementTitle": "贵州茅台关于召开2025年年度股东大会的通知",
+      "announcementTime": 1780358400000,
+      "adjunctUrl": "finalpage/2026-06-02/1220345600.PDF",
+      "adjunctType": "PDF"
+    },
+    {
+      "announcementId": null,
+      "secCode": "600519",
+      "secName": "贵州茅台",
+      "announcementTitle": "malformed row without id",
+      "announcementTime": 1780358400000,
+      "adjunctUrl": "finalpage/2026-06-02/broken.PDF",
+      "adjunctType": "PDF"
+    }
+  ]
+}

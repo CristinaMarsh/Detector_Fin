@@ -5,9 +5,13 @@
 # Names are in English only.
 instruments:
   # --- US: bare symbols; ETFs handled identically to equities in yfinance ---
-  - { ticker: NVDA, name_en: NVIDIA, market_id: US, instrument_type: equity }
-  - { ticker: TSLA, name_en: Tesla, market_id: US, instrument_type: equity }
-  - { ticker: AAPL, name_en: Apple, market_id: US, instrument_type: equity }
+  # edgar_cik: zero-padded 10-digit SEC CIK, used by the sec_edgar adapter.
+  - { ticker: NVDA, name_en: NVIDIA, market_id: US, instrument_type: equity,
+      ids: { edgar_cik: "0001045810" } }
+  - { ticker: TSLA, name_en: Tesla, market_id: US, instrument_type: equity,
+      ids: { edgar_cik: "0001318605" } }
+  - { ticker: AAPL, name_en: Apple, market_id: US, instrument_type: equity,
+      ids: { edgar_cik: "0000320193" } }
   - { ticker: SPY, name_en: SPDR S&P 500 ETF, market_id: US, instrument_type: etf }
   - { ticker: QQQ, name_en: Invesco QQQ Trust, market_id: US, instrument_type: etf }
 
@@ -19,7 +23,12 @@ instruments:
   - { ticker: 159915.SZ, name_en: ChiNext ETF, market_id: CN, instrument_type: etf, price_limit_override: 0.10 }
 
   # --- KR: .KS (KOSPI) / .KQ (KOSDAQ) suffixes ---
-  - { ticker: 005930.KS, name_en: Samsung Electronics, market_id: KR, instrument_type: equity }
+  # dart_corp_code: 8-digit DART corporation code, used by the dart adapter.
+  # Codes come from DART's official corpCode.xml download
+  # (https://opendart.fss.or.kr/); instruments without a code are skipped by
+  # the dart adapter until one is filled in from that file. Never guess codes.
+  - { ticker: 005930.KS, name_en: Samsung Electronics, market_id: KR, instrument_type: equity,
+      ids: { dart_corp_code: "00126380" } }
   - { ticker: 000660.KS, name_en: SK Hynix, market_id: KR, instrument_type: equity }
   - { ticker: 035420.KS, name_en: NAVER, market_id: KR, instrument_type: equity }
   - { ticker: 069500.KS, name_en: KODEX 200, market_id: KR, instrument_type: etf }
