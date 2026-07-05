@@ -1,4 +1,4 @@
-# Detector_Fin — Design Contract v0.3
+# Detector_Fin — Design Contract v0.3.1
 
 Purpose: daily equity risk assessment combining news flow, social
 sentiment, and market statistics across multiple markets (US, China,
@@ -61,17 +61,31 @@ Collects raw items from pluggable sources and persists them append-only.
 - Sources implement `SourceAdapter`:
   `fetch(market: MarketConfig, since: datetime) -> list[RawItem]`.
 - Adapter roster by market (priority order):
-  US: market_data (yfinance), stocktwits, reddit, rss_news, x_twitter(opt)
+  US: market_data (yfinance), sec_edgar (official disclosures),
+      stocktwits, reddit, rss_news, x_twitter(opt)
   CN: market_data (AkShare primary, yfinance .SS/.SZ fallback),
-      eastmoney_guba (stock forum posts), xueqiu, rss_news_cn,
-      x_twitter(opt, for globally followed names only)
+      cninfo (official disclosures), eastmoney_guba (stock forum posts),
+      xueqiu, rss_news_cn, x_twitter(opt, for globally followed names only)
   KR: market_data (pykrx primary, yfinance .KS/.KQ fallback),
-      naver_finance_board, rss_news_kr, x_twitter(opt)
+      dart (official disclosures), naver_finance_board, rss_news_kr,
+      x_twitter(opt)
 - Each RawItem carries a `lang` field (en, zh, ko). Fetcher does NO
   interpretation. Fidelity, language tag, and timestamps only.
+- Disclosure adapters (new in v0.3.1): sec_edgar (SEC submissions API),
+  cninfo (CSRC-designated disclosure platform), dart (Korea FSS
+  electronic disclosure). They fetch filing METADATA only (form type,
+  title, timestamps); item URLs point at the official disclosure
+  documents and propagate verbatim per the section 3 provenance rule.
+  Source-specific instrument identifiers (EDGAR CIK, DART corp_code)
+  live in the universe entry's `ids` map; instruments lacking a
+  required identifier are skipped, never guessed. DART requires an API
+  key supplied via environment variable, never committed. SEC requires
+  a descriptive User-Agent, also via environment variable.
 - Scraper adapters (guba, xueqiu, naver) must respect robots.txt and
   rate limits, cache aggressively, and degrade gracefully to empty
-  batches rather than crash the pipeline.
+  batches rather than crash the pipeline. Disclosure adapters degrade
+  the same way: a per-instrument fetch failure yields an empty batch
+  for that instrument, never a pipeline crash.
 
 ### 1.2 Aggregator
 Transforms RawItem streams into per-ticker, per-day structured features.
@@ -179,8 +193,10 @@ M2 fetcher: market_data adapters (yfinance US, AkShare CN, pykrx KR),
    covering both equities and ETFs (yfinance symbols, AkShare
    fund_etf_hist_em, pykrx ETF OHLCV endpoints) + universe registry
    + trading calendars + fixtures
-M3 fetcher: sentiment adapters (stocktwits, eastmoney_guba,
-   naver_finance_board) + fixtures
+M3a fetcher: disclosure adapters (sec_edgar US, cninfo CN, dart KR)
+    + universe `ids` map + fixtures
+M3b fetcher: sentiment adapters (stocktwits, eastmoney_guba,
+    naver_finance_board) + fixtures
 M4 aggregator: dedup, entity resolution, per-language sentiment
    scoring, snapshot builder
 M5 judge/quant.py + per-market baselines + evaluation harness

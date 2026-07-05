@@ -16,6 +16,11 @@ htmlcov/
 venv/
 env/
 
+# Secrets: environment files are never committed; keep .env.example updated.
+.env
+.env.*
+!.env.example
+
 # Data: pipeline output (append-only parquet) is never committed, but the
 # publication article fixtures under data/sample_articles/ are.
 data/*
