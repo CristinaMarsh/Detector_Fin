@@ -87,12 +87,12 @@ def test_snapshot_partition_uses_local_date():
 
 def test_fragment_length_cap():
     with pytest.raises(ValidationError):
-        Fragment(lang="en", original="x" * 281, en="ok")
+        Fragment(text_original="x" * 281, text_en="ok", source_name="rss_news")
 
 
 def test_top_fragments_capped():
     frags = [
-        Fragment(lang="en", original=f"f{i}", en=f"f{i}")
+        Fragment(text_original=f"f{i}", text_en=f"f{i}", source_name="rss_news")
         for i in range(MAX_FRAGMENTS + 1)
     ]
     with pytest.raises(ValidationError):
@@ -105,9 +105,16 @@ def test_top_fragments_capped():
         )
 
 
-def test_fragments_default_untrusted():
-    f = Fragment(lang="zh", original="利好", en="good news")
-    assert f.untrusted is True
+def test_fragment_mirrors_contract_fields():
+    f = Fragment(
+        text_original="利好",
+        text_en="good news",
+        source_name="eastmoney_guba",
+        source_url="https://guba.eastmoney.com/news,600519,1.html",
+    )
+    assert f.source_url.startswith("https://")
+    with pytest.raises(ValidationError):
+        Fragment(text_original="x", text_en="x", source_name="s", lang="zh")
 
 
 def test_riskscore_bounds():

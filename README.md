@@ -24,7 +24,7 @@ This repository is built milestone by milestone (one PR each):
 | **M2** | Fetcher: market-data adapters (yfinance/AkShare/pykrx), equities **and ETFs**, + universe registry + calendars | ✅ merged |
 | **M3a** | Fetcher: disclosure adapters (SEC EDGAR / cninfo / DART) + universe `ids` map | ✅ this PR |
 | **M3b** | Fetcher: sentiment adapters (StockTwits / guba / Naver board) | ✅ this PR |
-| M4 | Aggregator: dedup, entity resolution, sentiment, snapshot builder | — |
+| **M4** | Aggregator: dedup, entity resolution, events, sentiment, snapshot builder | ✅ this PR |
 | M5 | Judge/quant + per-market baselines + evaluation harness | — |
 | M6 | Judge/LLM + evidence dossier + GitHub Issue reporter | — |
 | M7 | GitHub Actions cron workflows (one per market) | — |

@@ -29,6 +29,12 @@ fetch = [
     "akshare>=1.13",
     "pykrx>=1.0.45",
 ]
+# FinBERT-family sentiment scorers (TransformersScorer). Optional: the core
+# install and all tests run with the deterministic lexicon baseline.
+sentiment = [
+    "transformers>=4.40",
+    "torch>=2.2",
+]
 # Simplified -> Traditional conversion for the publication build. Optional: the
 # generator degrades to identity (fixtures are authored in Traditional) without it.
 publish = [

@@ -161,18 +161,20 @@ class MarketBar(StorageRecord):
 
 
 class Fragment(BaseModel):
-    """A sanitised text fragment surfaced to the human reviewer.
+    """A sanitised text fragment surfaced to the human reviewer (section 2).
 
-    Both fields are untrusted external content. URLs, instructions, and markup
-    are stripped upstream at the Aggregator's sanitisation boundary.
+    Text fields are untrusted external content; URLs, instructions, and markup
+    are stripped at the Aggregator's sanitisation boundary before construction.
+    ``source_url`` propagates VERBATIM from ``RawItem.url`` per the section 3
+    provenance rule -- never backfilled or rewritten.
     """
 
     model_config = ConfigDict(extra="forbid")
 
-    lang: Lang
-    original: Annotated[str, StringConstraints(max_length=MAX_FRAGMENT_CHARS)]
-    en: Annotated[str, StringConstraints(max_length=MAX_FRAGMENT_CHARS)]
-    untrusted: bool = True
+    text_original: Annotated[str, StringConstraints(max_length=MAX_FRAGMENT_CHARS)]
+    text_en: Annotated[str, StringConstraints(max_length=MAX_FRAGMENT_CHARS)]
+    source_name: str
+    source_url: str | None = None
 
 
 class MarketStats(BaseModel):
