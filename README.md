@@ -25,7 +25,7 @@ This repository is built milestone by milestone (one PR each):
 | **M3a** | Fetcher: disclosure adapters (SEC EDGAR / cninfo / DART) + universe `ids` map | ✅ this PR |
 | **M3b** | Fetcher: sentiment adapters (StockTwits / guba / Naver board) | ✅ this PR |
 | **M4** | Aggregator: dedup, entity resolution, events, sentiment, snapshot builder | ✅ this PR |
-| M5 | Judge/quant + per-market baselines + evaluation harness | — |
+| **M5** | Judge/quant + per-market baselines + evaluation harness | ✅ this PR |
 | M6 | Judge/LLM + evidence dossier + GitHub Issue reporter | — |
 | M7 | GitHub Actions cron workflows (one per market) | — |
 | M8 | Backtest report over pilot universe | — |
